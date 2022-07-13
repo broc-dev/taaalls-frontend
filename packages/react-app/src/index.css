@@ -63,6 +63,16 @@ code {
   border: 0;
 }
 
+.social-links {
+    margin: 40px 0;
+  }
+
 .social-links a {
   margin: 0 10px;
+}
+
+@media only screen and (max-width: 740px) {
+  .mint-pane {
+    flex-direction: column;
+  }
 }
