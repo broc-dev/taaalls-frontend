@@ -54,29 +54,6 @@ function App() {
   const taaallsContractAddress = addresses.taaalls;
   const contract = new Contract(taaallsContractAddress, taaallsInterface);
 
-  const MintAuthor = () => {
-    const { state, send } = useContractFunction(contract, 'authorMint', {
-      transactionName: 'Mint Author',
-      gasLimitBufferPercentage: 10,
-    })
-    const { status } = state
-
-    const mintOne = () => {
-      try {
-        void send(3)
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    return (
-      <div>
-        <Button className="mint-button" onClick={() => mintOne()}>MIIINT</Button>
-        {status !== "None" && <p className="status">{status == "Exception" ? "Error" : "Pending"}</p>}
-      </div>
-    )
-  }
-
   const MintOne = () => {
     const { state, send } = useContractFunction(contract, 'mintOne', {
       transactionName: 'Mint One',
@@ -91,7 +68,11 @@ function App() {
     return (
       <div>
         <Button className="mint-button" onClick={() => mintOne()}>MIIINT</Button>
-        {status !== "None" && <p className="status">{status == "Exception" ? "Error" : "Pending"}</p>}
+        {status !== "None" && <p className="status">{
+          status == "Exception" 
+          ? "Error"
+          : (status == "Success") ? "Success" : "Pending"
+        }</p>}
       </div>
     )
   }
@@ -110,7 +91,11 @@ function App() {
     return (
       <div>
         <Button className="mint-button" onClick={() => mintFiveTaaalls()}>MIIINT</Button>
-        {status !== "None" && <p className="status">{status == "Exception" ? "Error" : "Pending"}</p>}
+        {status !== "None" && <p className="status">{
+          status == "Exception" 
+          ? "Error"
+          : (status == "Success") ? "Success" : "Pending"
+        }</p>}
       </div>
     )
   }
@@ -129,7 +114,11 @@ function App() {
     return (
       <div>
         <Button className="mint-button" onClick={() => mintSixtyNineTaaalls()}>MIIINT</Button>
-        {status !== "None" && <p className="status">{status == "Exception" ? "Error" : "Pending"}</p>}
+        {status !== "None" && <p className="status">{
+          status == "Exception" 
+          ? "Error"
+          : (status == "Success") ? "Success" : "Pending"
+        }</p>}
       </div>
     )
   }
@@ -160,7 +149,6 @@ function App() {
             <p>MIIINT ONE</p>
             <p>FREE</p>
             <p>2 MAX</p>
-            <MintAuthor />
             <MintOne />
           </div>
           <div className="mint-item">
@@ -184,7 +172,7 @@ function App() {
           <Link href="https://twitter.com/taaallsNFT">
             Twitter
           </Link>
-          <Link href="https://thegraph.com/docs/quick-start">Discord</Link>
+          {/*<Link href="https://thegraph.com/docs/quick-start">Discord</Link>*/}
         </div>
       </Body>
     </Container>
