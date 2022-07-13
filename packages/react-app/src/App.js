@@ -123,15 +123,6 @@ function App() {
     )
   }
 
-  // // Read more about useDapp on https://usedapp.io/
-  // const { error: contractCallError, value: tokenBalance } =
-  //   useCall({
-  //      contract: new Contract(addresses.taaalls, abis.taaalls),
-  //      method: "balanceOf",
-  //      args: ["0x3f8CB69d9c0ED01923F11c829BaE4D9a4CB6c82C"],
-  //   }) ?? {};
-
-
   return (
     <Container>
       <Header>
@@ -172,7 +163,7 @@ function App() {
           <Link href="https://twitter.com/taaallsNFT">
             Twitter
           </Link>
-          {/*<Link href="https://thegraph.com/docs/quick-start">Discord</Link>*/}
+          <Link href="https://opensea.io/collection/taaalls">OpenSea</Link>
         </div>
       </Body>
     </Container>

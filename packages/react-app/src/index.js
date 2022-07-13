@@ -11,6 +11,7 @@ const INFURA_PROJECT_ID = "be05494c2bff4e0782942a501db13a81";
 const config = {
   readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
+    // [Mainnet.chainId]: "https://rinkeby.infura.io/v3/2a3cc95237aa40b69abed701a432b46f",
     [Mainnet.chainId]: "https://mainnet.infura.io/v3/" + INFURA_PROJECT_ID,
   },
 }
