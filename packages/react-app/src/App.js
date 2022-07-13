@@ -62,12 +62,14 @@ function App() {
     const { status } = state
 
     const mintOne = () => {
-      void send()
+      if(chainId == 1) {
+        void send()
+      }
     }
 
     return (
       <div>
-        <Button className="mint-button" onClick={() => mintOne()}>MIIINT</Button>
+        <Button className="mint-button" onClick={() => mintOne()}>{chainId == 1 ? "MIIINT" : "ERROR"}</Button>
         {status !== "None" && <p className="status">{
           status == "Exception" 
           ? "Error"
@@ -85,12 +87,14 @@ function App() {
     const { status } = state
 
     const mintFiveTaaalls = () => {
-      void send({ value: utils.parseEther('0.0345') })
+      if(chainId == 1) {
+        void send({ value: utils.parseEther('0.0345') })
+      }
     }
 
     return (
       <div>
-        <Button className="mint-button" onClick={() => mintFiveTaaalls()}>MIIINT</Button>
+        <Button className="mint-button" onClick={() => mintFiveTaaalls()}>{chainId == 1 ? "MIIINT" : "ERROR"}</Button>
         {status !== "None" && <p className="status">{
           status == "Exception" 
           ? "Error"
@@ -108,12 +112,14 @@ function App() {
     const { status } = state
 
     const mintSixtyNineTaaalls = () => {
-      void send({ value: utils.parseEther('0.42') })
+      if(chainId == 1) {
+        void send({ value: utils.parseEther('0.42') })
+      }
     }
 
     return (
       <div>
-        <Button className="mint-button" onClick={() => mintSixtyNineTaaalls()}>MIIINT</Button>
+        <Button className="mint-button" onClick={() => mintSixtyNineTaaalls()}>{chainId == 1 ? "MIIINT" : "ERROR"}</Button>
         {status !== "None" && <p className="status">{
           status == "Exception" 
           ? "Error"
@@ -133,6 +139,7 @@ function App() {
         <h1 className="taaalls-title">
           MIIIINT YOUUUR TAAALLS
         </h1>
+        {chainId !== 1 && <p style={{"color": "#FF0000", "backgroundColor": "rgba(255, 0, 0, 0.1)", "fontWeight": "bold"}}>Connect to Ethereum Mainnet</p>}
         <div className="mint-pane">
           <div className="mint-item">
             <span className="mint-title">TALL</span>
