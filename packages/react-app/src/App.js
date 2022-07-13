@@ -1,13 +1,13 @@
-import { useQuery } from "@apollo/client";
 import { Contract } from "@ethersproject/contracts";
-import { shortenAddress, useCall, useEthers, useLookupAddress } from "@usedapp/core";
+import { utils } from 'ethers'
+import { shortenAddress, useCall, useEthers, useLookupAddress, useContractFunction } from "@usedapp/core";
 import React, { useEffect, useState } from "react";
 
 import { Body, Button, Container, Header, Image, Link } from "./components";
-import logo from "./ethereumLogo.png";
+import logo from "./taaalls-logo.png";
+import firstTaaall from "./first-taaall.png";
 
 import { addresses, abis } from "@my-app/contracts";
-import GET_TRANSFERS from "./graphql/subgraph";
 
 function WalletButton() {
   const [rendered, setRendered] = useState("");
@@ -41,48 +41,151 @@ function WalletButton() {
         }
       }}
     >
-      {rendered === "" && "Connect Wallet"}
+      {rendered === "" && "CONNEEEEECT"}
       {rendered !== "" && rendered}
     </Button>
   );
 }
 
 function App() {
-  // Read more about useDapp on https://usedapp.io/
-  const { error: contractCallError, value: tokenBalance } =
-    useCall({
-       contract: new Contract(addresses.ceaErc20, abis.erc20),
-       method: "balanceOf",
-       args: ["0x3f8CB69d9c0ED01923F11c829BaE4D9a4CB6c82C"],
-    }) ?? {};
+  const { account, activateBrowserWallet, deactivate, error, chainId } = useEthers();
 
-  const { loading, error: subgraphQueryError, data } = useQuery(GET_TRANSFERS);
+  const taaallsInterface = new utils.Interface(abis.taaalls);
+  const taaallsContractAddress = addresses.taaalls;
+  const contract = new Contract(taaallsContractAddress, taaallsInterface);
 
-  useEffect(() => {
-    if (subgraphQueryError) {
-      console.error("Error while querying subgraph:", subgraphQueryError.message);
-      return;
+  const MintAuthor = () => {
+    const { state, send } = useContractFunction(contract, 'authorMint', {
+      transactionName: 'Mint Author',
+      gasLimitBufferPercentage: 10,
+    })
+    const { status } = state
+
+    const mintOne = () => {
+      try {
+        void send(3)
+      } catch (e) {
+        console.log(e);
+      }
     }
-    if (!loading && data && data.transfers) {
-      console.log({ transfers: data.transfers });
+
+    return (
+      <div>
+        <Button className="mint-button" onClick={() => mintOne()}>MIIINT</Button>
+        {status !== "None" && <p className="status">{status == "Exception" ? "Error" : "Pending"}</p>}
+      </div>
+    )
+  }
+
+  const MintOne = () => {
+    const { state, send } = useContractFunction(contract, 'mintOne', {
+      transactionName: 'Mint One',
+      gasLimitBufferPercentage: 10,
+    })
+    const { status } = state
+
+    const mintOne = () => {
+      void send()
     }
-  }, [loading, subgraphQueryError, data]);
+
+    return (
+      <div>
+        <Button className="mint-button" onClick={() => mintOne()}>MIIINT</Button>
+        {status !== "None" && <p className="status">{status == "Exception" ? "Error" : "Pending"}</p>}
+      </div>
+    )
+  }
+
+  const MintFive = () => {
+    const { state, send } = useContractFunction(contract, 'mintFive', {
+      transactionName: 'Mint Five',
+      gasLimitBufferPercentage: 10,
+    })
+    const { status } = state
+
+    const mintFiveTaaalls = () => {
+      void send({ value: utils.parseEther('0.0345') })
+    }
+
+    return (
+      <div>
+        <Button className="mint-button" onClick={() => mintFiveTaaalls()}>MIIINT</Button>
+        {status !== "None" && <p className="status">{status == "Exception" ? "Error" : "Pending"}</p>}
+      </div>
+    )
+  }
+
+  const MintSixtyNine = () => {
+    const { state, send } = useContractFunction(contract, 'mintSixtyNine', {
+      transactionName: 'Mint Sixty Nine',
+      gasLimitBufferPercentage: 10,
+    })
+    const { status } = state
+
+    const mintSixtyNineTaaalls = () => {
+      void send({ value: utils.parseEther('0.42') })
+    }
+
+    return (
+      <div>
+        <Button className="mint-button" onClick={() => mintSixtyNineTaaalls()}>MIIINT</Button>
+        {status !== "None" && <p className="status">{status == "Exception" ? "Error" : "Pending"}</p>}
+      </div>
+    )
+  }
+
+  // // Read more about useDapp on https://usedapp.io/
+  // const { error: contractCallError, value: tokenBalance } =
+  //   useCall({
+  //      contract: new Contract(addresses.taaalls, abis.taaalls),
+  //      method: "balanceOf",
+  //      args: ["0x3f8CB69d9c0ED01923F11c829BaE4D9a4CB6c82C"],
+  //   }) ?? {};
+
 
   return (
     <Container>
       <Header>
+        <Image src={logo} alt="taaalls-logo" />
         <WalletButton />
       </Header>
       <Body>
-        <Image src={logo} alt="ethereum-logo" />
-        <p>
-          Edit <code>packages/react-app/src/App.js</code> and save to reload.
-        </p>
-        <Link href="https://reactjs.org">
-          Learn React
-        </Link>
-        <Link href="https://usedapp.io/">Learn useDapp</Link>
-        <Link href="https://thegraph.com/docs/quick-start">Learn The Graph</Link>
+        <h1 className="taaalls-title">
+          MIIIINT YOUUUR TAAALLS
+        </h1>
+        <div className="mint-pane">
+          <div className="mint-item">
+            <span className="mint-title">TALL</span>
+            <hr />
+            <p>MIIINT ONE</p>
+            <p>FREE</p>
+            <p>2 MAX</p>
+            <MintAuthor />
+            <MintOne />
+          </div>
+          <div className="mint-item">
+            <span className="mint-title">TAALLER</span>
+            <hr />
+            <p>MIIINT FIVE</p>
+            <p>0.0069 ETH EACH</p>
+            <p>12 MAX</p>
+            <MintFive />
+          </div>
+          <div className="mint-item">
+            <span className="mint-title">TAAALLEST</span>
+            <hr />
+            <p>MIIINT 69</p>
+            <p>0.420 ETH TOTAL</p>
+            <p>75 MAX</p>
+            <MintSixtyNine />
+          </div>
+        </div>
+        <div className="social-links">
+          <Link href="https://twitter.com/taaallsNFT">
+            Twitter
+          </Link>
+          <Link href="https://thegraph.com/docs/quick-start">Discord</Link>
+        </div>
       </Body>
     </Container>
   );
